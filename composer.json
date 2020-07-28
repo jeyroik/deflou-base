@@ -1,0 +1,23 @@
+{
+  "name": "jeyroik/deflou-base",
+  "description": "Base DeFlou behaviour package",
+  "require": {
+    "jeyroik/deflou-foundation": "0.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9",
+    "vlucas/phpdotenv": "^3.4",
+    "phpstan/phpstan": "0.*",
+    "jeyroik/extas-snuffbox": "0.*",
+    "jeyroik/extas-snuffbox-repositories": "0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "deflou\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --testdox --coverage-clover=coverage.xml --whitelist=src tests",
+    "stan": "vendor/bin/phpstan analyse -l 5 src"
+  }
+}
