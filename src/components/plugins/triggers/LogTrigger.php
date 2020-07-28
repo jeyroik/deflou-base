@@ -30,8 +30,9 @@ class LogTrigger extends Plugin implements IStageAfterActionRun
 
     /**
      * @param IApplicationActionResponse $response
+     * @return IApplicationActionResponse
      */
-    public function __invoke(IApplicationActionResponse $response): void
+    public function __invoke(IApplicationActionResponse $response): IApplicationActionResponse
     {
         $this->triggersLogs()->create(new TriggerLog([
             TriggerLog::FIELD__EVENT_ID => $this->getApplicationEvent()->getId(),
@@ -42,5 +43,7 @@ class LogTrigger extends Plugin implements IStageAfterActionRun
             TriggerLog::FIELD__CREATED_AT => time(),
             TriggerLog::FIELD__ID => Uuid::uuid6()->toString()
         ]));
+
+        return $response;
     }
 }

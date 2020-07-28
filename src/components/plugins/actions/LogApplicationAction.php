@@ -27,9 +27,12 @@ class LogApplicationAction extends Plugin implements IStageAfterActionRun
 
     /**
      * @param IApplicationActionResponse $response
+     * @return IApplicationActionResponse
      */
-    public function __invoke(IApplicationActionResponse $response): void
+    public function __invoke(IApplicationActionResponse $response): IApplicationActionResponse
     {
         $this->applicationActions()->create($this->getApplicationAction());
+
+        return $response;
     }
 }
