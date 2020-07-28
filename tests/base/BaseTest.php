@@ -10,6 +10,7 @@ use deflou\interfaces\IDeflou;
 use Dotenv\Dotenv;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
+use extas\components\plugins\Plugin;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepositoryDynamic;
 use extas\components\THasMagicClass;
@@ -40,7 +41,8 @@ class BaseTest extends TestCase
         $this->createSnuffDynamicRepositories([
             ['applications', 'name', Application::class],
             ['activities', 'name', Activity::class],
-            ['triggers', 'name', Trigger::class]
+            ['triggers', 'name', Trigger::class],
+            ['plugins', 'class', Plugin::class]
         ]);
     }
 
@@ -71,7 +73,9 @@ class BaseTest extends TestCase
 
         $this->assertFalse(
             $output->hasErrors(),
-            'Output has errors: ' . print_r($output, true) . PHP_EOL . 'Output: '  . $cOutput->fetch()
+            'Output has errors: ' . print_r($output, true) . PHP_EOL .
+            'Output: '  . $cOutput->fetch() . PHP_EOL .
+            'Plugins installed: ' . print_r($this->getMagicClass('plugins')->all([]), true)
         );
     }
 }
