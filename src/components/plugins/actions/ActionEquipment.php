@@ -7,6 +7,7 @@ use deflou\interfaces\triggers\events\IApplicationEvent;
 use extas\components\plugins\Plugin;
 use extas\interfaces\parsers\IParser;
 use extas\interfaces\repositories\IRepository;
+use extas\interfaces\samples\parameters\ISampleParameter;
 
 /**
  * Class ActionEquipment
@@ -62,13 +63,14 @@ class ActionEquipment extends Plugin implements IStageBeforeActionRun
         IApplicationAction $action
     ): array
     {
-        foreach ($artifacts as $name => $value) {
-            $parser[static::FIELD__ACTION] = $action;
-            $parser[static::FIELD__EVENT] = $event;
+        foreach ($artifacts as $name => $options) {
+            $value = $options[ISampleParameter::FIELD__VALUE];
+            $parser[static::FIELD__ACTION] = $action->getParametersValues();
+            $parser[static::FIELD__EVENT] = $event->getParametersValues();
 
             if ($parser->canParse($value)) {
-                $value = $parser->parse($value);
-                $artifacts[$name] = $value;
+                $options[ISampleParameter::FIELD__VALUE] = $parser->parse($value);
+                $artifacts[$name] = $options;
             }
         }
 
