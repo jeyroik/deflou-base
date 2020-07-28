@@ -76,7 +76,7 @@ class BaseTest extends TestCase
 
         $output = $this->deflou->dispatchEvent(new Input([
             'app' => 'test',
-            'event' => 'test',
+            'event' => 'test_event',
             'test' => 'is ok'
         ]));
 
@@ -96,14 +96,22 @@ class BaseTest extends TestCase
         ]));
 
         $this->getMagicClass('activities')->create(new Activity([
-            Activity::FIELD__NAME => 'test',
+            Activity::FIELD__NAME => 'test_event',
             Activity::FIELD__SAMPLE_NAME => 'testEvent',
-            Activity::FIELD__APPLICATION_NAME => 'test'
+            Activity::FIELD__APPLICATION_NAME => 'test',
+            Activity::FIELD__TYPE => Activity::TYPE__EVENT
+        ]));
+
+        $this->getMagicClass('activities')->create(new Activity([
+            Activity::FIELD__NAME => 'test_action',
+            Activity::FIELD__SAMPLE_NAME => 'testAction',
+            Activity::FIELD__APPLICATION_NAME => 'test',
+            Activity::FIELD__TYPE => Activity::TYPE__ACTION
         ]));
 
         $this->getMagicClass('triggers')->create(new Trigger([
-            Trigger::FIELD__EVENT_NAME => 'test',
-            Trigger::FIELD__ACTION_NAME => 'test',
+            Trigger::FIELD__EVENT_NAME => 'test_event',
+            Trigger::FIELD__ACTION_NAME => 'test_action',
             Trigger::FIELD__EVENT_PARAMETERS => [
                 'test' => [
                     IConditionParameter::FIELD__NAME => 'test',
