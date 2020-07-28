@@ -157,7 +157,12 @@ class BaseTest extends TestCase
             IApplicationAction::FIELD__NAME => 'test_action'
         ]);
 
-        $this->assertCount(1, $appActions);
+        $this->assertCount(
+            1,
+            $appActions,
+            'Incorrect actions count;' . print_r($appActions, true)
+        );
+        
         $appAction = array_shift($appActions);
         unset($appAction[$appAction::FIELD__ID], $appAction[$appAction::FIELD__CREATED_AT]);
 
