@@ -12,11 +12,10 @@ use deflou\components\triggers\actions\ApplicationActionResponse;
  */
 class MiscApplication extends ApplicationDispatcher
 {
-
     public function testEvent()
     {
         $event = $this->getApplicationEvent();
-        $event->addParameterByValue('equipment', true);
+        $event->addParameterByValue($event::PARAM__ARTIFACTS, $event->getParameterValue($event::PARAM__SOURCE));
 
         return $event;
     }
