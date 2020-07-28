@@ -5,6 +5,8 @@ use deflou\components\applications\activities\Activity;
 use deflou\components\applications\Application;
 use deflou\components\Deflou;
 use deflou\components\Input;
+use deflou\components\triggers\actions\ApplicationAction;
+use deflou\components\triggers\events\ApplicationEvent;
 use deflou\components\triggers\Trigger;
 use deflou\interfaces\IDeflou;
 use Dotenv\Dotenv;
@@ -45,7 +47,8 @@ class BaseTest extends TestCase
             ['applications', 'name', Application::class],
             ['activities', 'name', Activity::class],
             ['triggers', 'name', Trigger::class],
-            ['plugins', 'class', Plugin::class]
+            ['applicationEvents', 'id', ApplicationEvent::class],
+            ['applicationActions', 'id', ApplicationAction::class]
         ]);
     }
 
