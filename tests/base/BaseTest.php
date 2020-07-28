@@ -173,7 +173,7 @@ class BaseTest extends TestCase
                         ISampleParameter::FIELD__VALUE => [
                             'test' => [
                                 ISampleParameter::FIELD__NAME => 'test',
-                                ISampleParameter::FIELD__VALUE => 'verified: is ok'
+                                ISampleParameter::FIELD__VALUE => 'verified: @event.test'
                             ]
                         ]
                     ],
