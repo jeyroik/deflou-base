@@ -12,6 +12,7 @@ use deflou\interfaces\IDeflou;
 use Dotenv\Dotenv;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
+use extas\components\parsers\Parser;
 use extas\components\plugins\Plugin;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepositoryDynamic;
@@ -48,7 +49,8 @@ class BaseTest extends TestCase
             ['activities', 'name', Activity::class],
             ['triggers', 'name', Trigger::class],
             ['applicationEvents', 'id', ApplicationEvent::class],
-            ['applicationActions', 'id', ApplicationAction::class]
+            ['applicationActions', 'id', ApplicationAction::class],
+            ['parsers', 'name', Parser::class]
         ]);
     }
 
