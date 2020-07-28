@@ -277,5 +277,43 @@ class BaseTest extends TestCase
                 ]
             ]
         ]));
+
+        $this->getMagicClass('triggers')->create(new Trigger([
+            Trigger::FIELD__NAME => 'incorrect event param',
+            Trigger::FIELD__EVENT_NAME => 'test_event',
+            Trigger::FIELD__ACTION_NAME => 'test_action',
+            Trigger::FIELD__EVENT_PARAMETERS => [
+                'test_unknown' => [
+                    IConditionParameter::FIELD__NAME => 'test',
+                    IConditionParameter::FIELD__VALUE => 'is ok',
+                    IConditionParameter::FIELD__CONDITION => '='
+                ]
+            ],
+            Trigger::FIELD__ACTION_PARAMETERS => [
+                'test' => [
+                    ISampleParameter::FIELD__NAME => 'test',
+                    ISampleParameter::FIELD__VALUE => 'verified: @event.test'
+                ]
+            ]
+        ]));
+
+        $this->getMagicClass('triggers')->create(new Trigger([
+            Trigger::FIELD__NAME => 'not applicable by condition',
+            Trigger::FIELD__EVENT_NAME => 'test_event',
+            Trigger::FIELD__ACTION_NAME => 'test_action',
+            Trigger::FIELD__EVENT_PARAMETERS => [
+                'test' => [
+                    IConditionParameter::FIELD__NAME => 'test',
+                    IConditionParameter::FIELD__VALUE => 'is ok',
+                    IConditionParameter::FIELD__CONDITION => '!='
+                ]
+            ],
+            Trigger::FIELD__ACTION_PARAMETERS => [
+                'test' => [
+                    ISampleParameter::FIELD__NAME => 'test',
+                    ISampleParameter::FIELD__VALUE => 'verified: @event.test'
+                ]
+            ]
+        ]));
     }
 }
