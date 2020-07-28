@@ -66,7 +66,7 @@ class ActionEquipment extends Plugin implements IStageBeforeActionRun
         foreach ($artifacts as $name => $options) {
             $value = $options[ISampleParameter::FIELD__VALUE];
             $parser[static::FIELD__ACTION] = $action->getParametersValues();
-            $parser[static::FIELD__EVENT] = $event->getParametersValues();
+            $parser[static::FIELD__EVENT] = $event->getArtifactsParameters();
 
             if ($parser->canParse($value)) {
                 $options[ISampleParameter::FIELD__VALUE] = $parser->parse($value);
