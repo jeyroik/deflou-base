@@ -260,7 +260,7 @@ class BaseTest extends TestCase
                 'test' => [
                     IConditionParameter::FIELD__NAME => 'test',
                     IConditionParameter::FIELD__VALUE => 'is ok',
-                    IConditionParameter::FIELD__CONDITION => 'equal'
+                    IConditionParameter::FIELD__CONDITION => '='
                 ]
             ],
             Trigger::FIELD__ACTION_PARAMETERS => [
