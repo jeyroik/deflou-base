@@ -20,6 +20,7 @@ use extas\components\conditions\TSnuffConditions;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
 use extas\components\parsers\Parser;
+use extas\components\parsers\ParserSimpleReplace;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepository;
 use extas\components\repositories\TSnuffRepositoryDynamic;
@@ -66,7 +67,20 @@ class BaseTest extends TestCase
         $this->registerSnuffRepos([
             'conditionRepository' => ConditionRepository::class
         ]);
-        $this->createSnuffCondition('equal');
+        $this->createSnuffConditions(['equal', 'not_empty']);
+        $this->getMagicClass('parsers')->create(new Parser([
+            Parser::FIELD__NAME => 'event',
+            Parser::FIELD__SAMPLE_NAME => 'simple_replace',
+            Parser::FIELD__CLASS => ParserSimpleReplace::class,
+            Parser::FIELD__VALUE => '',
+            Parser::FIELD__CONDITION => '!@',
+            Parser::FIELD__PARAMETERS => [
+                ParserSimpleReplace::FIELD__PARAM_NAME => [
+                    ISampleParameter::FIELD__NAME => ParserSimpleReplace::FIELD__PARAM_NAME,
+                    ISampleParameter::FIELD__VALUE => 'event'
+                ]
+            ]
+        ]));
     }
 
     protected function tearDown(): void
@@ -119,7 +133,9 @@ class BaseTest extends TestCase
 
         $this->assertCount(1, $logs);
         $log = array_shift($logs);
-        unset($log[$log::FIELD__ID], $log[$log::FIELD__CREATED_AT]);
+
+        $this->assertFalse($log->isSuccess());
+        $this->assertEquals('test', $log->getResponseBody());
 
         $event = $this->getMagicClass('applicationEvents')->one([
             IApplicationEvent::FIELD__NAME => 'test_event'
@@ -128,17 +144,8 @@ class BaseTest extends TestCase
             IApplicationAction::FIELD__NAME => 'test_action'
         ]);
 
-        $this->assertEquals(
-            [
-                TriggerLog::FIELD__EVENT_ID => $event->getId(),
-                TriggerLog::FIELD__ACTION_ID => $action->getId(),
-                TriggerLog::FIELD__TRIGGER_NAME => 'test',
-                TriggerLog::FIELD__RESPONSE_BODY => 'test',
-                TriggerLog::FIELD__RESPONSE_STATUS => 0,
-            ],
-            $log->__toArray(),
-            'Incorrect trigger log:' . print_r($log->__toArray(), true)
-        );
+        $this->assertEquals($event->getId(), $log->getEventId());
+        $this->assertEquals($action->getId(), $log->getActionId());
     }
 
     protected function validateApplicationAction()
@@ -219,7 +226,7 @@ class BaseTest extends TestCase
                         ISampleParameter::FIELD__VALUE => [
                             'app' => 'test',
                             'event' => 'test_event',
-                            'test' => 'is ok'
+                            'test' => 'verified: is ok'
                         ]
                     ]
                 ],
@@ -266,7 +273,7 @@ class BaseTest extends TestCase
             Trigger::FIELD__ACTION_PARAMETERS => [
                 'test' => [
                     ISampleParameter::FIELD__NAME => 'test',
-                    ISampleParameter::FIELD__VALUE => 'verified: is ok'
+                    ISampleParameter::FIELD__VALUE => 'verified: @event.test'
                 ]
             ]
         ]));
