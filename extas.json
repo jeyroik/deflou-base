@@ -3,35 +3,43 @@
   "plugins": [
     {
       "class": "deflou\\components\\plugins\\events\\ApplicationDetermineByParamApp",
-      "stage": "deflou.application.determine"
+      "stage": "deflou.application.determine",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\events\\EventDetermineByParamEvent",
-      "stage": "deflou.event.determine"
+      "stage": "deflou.event.determine",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\events\\LogApplicationEvent",
-      "stage": "deflou.after.event.equipment"
+      "stage": "deflou.after.event.equipment",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\triggers\\CollectTriggersByEvent",
-      "stage": "deflou.collect.triggers"
+      "stage": "deflou.collect.triggers",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\triggers\\ValidateTriggers",
-      "stage": "deflou.after.collect.triggers"
+      "stage": "deflou.after.collect.triggers",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\actions\\ActionEquipment",
-      "stage": "deflou.before.action.run"
+      "stage": "deflou.before.action.run",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\actions\\LogApplicationAction",
-      "stage": "deflou.after.action.run"
+      "stage": "deflou.after.action.run",
+      "install_on": "install"
     },
     {
       "class": "deflou\\components\\plugins\\triggers\\LogTrigger",
-      "stage": "deflou.after.action.run"
+      "stage": "deflou.after.action.run",
+      "install_on": "install"
     }
   ]
 }

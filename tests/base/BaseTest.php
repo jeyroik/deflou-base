@@ -14,6 +14,7 @@ use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepositoryDynamic;
 use extas\components\THasMagicClass;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Class BaseTest
@@ -50,12 +51,17 @@ class BaseTest extends TestCase
 
     public function testBasic()
     {
+        /**
+         * @var BufferedOutput $output
+         */
+        $cOutput = $this->getOutput(true);
+
         $installer = new Installer([
             Installer::FIELD__INPUT => $this->getInput(),
-            Installer::FIELD__OUTPUT => $this->getOutput()
+            Installer::FIELD__OUTPUT => $cOutput
         ]);
         $installer->installPackages([
-            json_decode(file_get_contents(getcwd() . '/extas.json'), true)
+            'deflou/base' => json_decode(file_get_contents(getcwd() . '/extas.json'), true)
         ]);
 
         $output = $this->deflou->dispatchEvent(new Input([
@@ -63,6 +69,9 @@ class BaseTest extends TestCase
             'event' => 'test'
         ]));
 
-        $this->assertFalse($output->hasErrors(), 'Output has errors: ' . print_r($output, true));
+        $this->assertFalse(
+            $output->hasErrors(),
+            'Output has errors: ' . print_r($output, true) . PHP_EOL . 'Output: '  . $cOutput->fetch()
+        );
     }
 }
