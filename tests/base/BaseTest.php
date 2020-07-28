@@ -30,6 +30,7 @@ use extas\interfaces\samples\parameters\ISampleParameter;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use tests\base\misc\MiscApplication;
 
 /**
@@ -88,6 +89,48 @@ class BaseTest extends TestCase
         $this->deleteSnuffDynamicRepositories();
     }
 
+    public function testMissedAppParam()
+    {
+        /**
+         * @var BufferedOutput $output
+         */
+        $cOutput = $this->getOutput(true);
+
+        $this->prepareDefault($cOutput);
+
+        $output = $this->deflou->dispatchEvent(new Input([
+            'event' => 'test_event',
+            'test' => 'is ok'
+        ]));
+
+        $this->assertTrue(
+            $output->hasErrors(),
+            'Output has not errors: ' . print_r($output, true) . PHP_EOL .
+            'Installation output: '  . $cOutput->fetch() . PHP_EOL
+        );
+    }
+
+    public function testMissedEventParam()
+    {
+        /**
+         * @var BufferedOutput $output
+         */
+        $cOutput = $this->getOutput(true);
+
+        $this->prepareDefault($cOutput);
+
+        $output = $this->deflou->dispatchEvent(new Input([
+            'app' => 'test',
+            'test' => 'is ok'
+        ]));
+
+        $this->assertTrue(
+            $output->hasErrors(),
+            'Output has not errors: ' . print_r($output, true) . PHP_EOL .
+            'Installation output: '  . $cOutput->fetch() . PHP_EOL
+        );
+    }
+
     public function testBasic()
     {
         /**
@@ -95,15 +138,7 @@ class BaseTest extends TestCase
          */
         $cOutput = $this->getOutput(true);
 
-        $installer = new Installer([
-            Installer::FIELD__INPUT => $this->getInput(),
-            Installer::FIELD__OUTPUT => $cOutput
-        ]);
-        $installer->installPackages([
-            'deflou/base' => json_decode(file_get_contents(getcwd() . '/extas.json'), true)
-        ]);
-
-        $this->prepareDefault();
+        $this->prepareDefault($cOutput);
 
         $output = $this->deflou->dispatchEvent(new Input([
             'app' => 'test',
@@ -122,7 +157,7 @@ class BaseTest extends TestCase
         $this->validateTriggerLog();
     }
 
-    protected function validateTriggerLog()
+    protected function validateTriggerLog(): void
     {
         /**
          * @var ITriggerLog[] $logs
@@ -148,7 +183,7 @@ class BaseTest extends TestCase
         $this->assertEquals($action->getId(), $log->getActionId());
     }
 
-    protected function validateApplicationAction()
+    protected function validateApplicationAction(): void
     {
         /**
          * @var IApplicationAction[] $appActions
@@ -198,7 +233,7 @@ class BaseTest extends TestCase
         );
     }
 
-    protected function validateApplicationEvent()
+    protected function validateApplicationEvent(): void
     {
         /**
          * @var IApplicationEvent[] $appEvents
@@ -242,8 +277,19 @@ class BaseTest extends TestCase
         );
     }
 
-    protected function prepareDefault()
+    /**
+     * @param OutputInterface $cOutput
+     */
+    protected function prepareDefault(OutputInterface $cOutput): void
     {
+        $installer = new Installer([
+            Installer::FIELD__INPUT => $this->getInput(),
+            Installer::FIELD__OUTPUT => $cOutput
+        ]);
+        $installer->installPackages([
+            'deflou/base' => json_decode(file_get_contents(getcwd() . '/extas.json'), true)
+        ]);
+
         $this->getMagicClass('applications')->create(new Application([
             Application::FIELD__NAME => 'test',
             Application::FIELD__SAMPLE_NAME => 'testSample',
