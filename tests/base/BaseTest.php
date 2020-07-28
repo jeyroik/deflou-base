@@ -297,7 +297,7 @@ class BaseTest extends TestCase
             Trigger::FIELD__ACTION_PARAMETERS => [
                 'test' => [
                     ISampleParameter::FIELD__NAME => 'test',
-                    ISampleParameter::FIELD__VALUE => 'verified: @event.test'
+                    ISampleParameter::FIELD__VALUE => 'missing verify: @event.test'
                 ]
             ]
         ]));
@@ -316,7 +316,7 @@ class BaseTest extends TestCase
             Trigger::FIELD__ACTION_PARAMETERS => [
                 'test' => [
                     ISampleParameter::FIELD__NAME => 'test',
-                    ISampleParameter::FIELD__VALUE => 'verified: @event.test'
+                    ISampleParameter::FIELD__VALUE => 'broken verified: @event.test'
                 ]
             ]
         ]));
