@@ -3,7 +3,6 @@ namespace deflou\interfaces\stages;
 
 use deflou\interfaces\applications\IApplication;
 use deflou\interfaces\servers\requests\IApplicationRequest;
-use extas\interfaces\http\IHasHttpIO;
 
 /**
  * Interface IStageApplicationDetermined
@@ -11,7 +10,7 @@ use extas\interfaces\http\IHasHttpIO;
  * @package deflou\interfaces\stages
  * @author jeyroik <jeyroik@gmail.com>
  */
-interface IStageApplicationDetermined extends IHasHttpIO
+interface IStageApplicationDetermined
 {
     public const NAME = 'deflou.application.determined';
 

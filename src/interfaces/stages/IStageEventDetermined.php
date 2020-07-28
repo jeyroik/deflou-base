@@ -4,7 +4,6 @@ namespace deflou\interfaces\stages;
 use deflou\interfaces\applications\activities\IActivity;
 use deflou\interfaces\applications\IApplication;
 use deflou\interfaces\servers\requests\IApplicationRequest;
-use extas\interfaces\http\IHasHttpIO;
 
 /**
  * Interface IStageEventDetermined
@@ -12,7 +11,7 @@ use extas\interfaces\http\IHasHttpIO;
  * @package deflou\interfaces\stages
  * @author jeyroik <jeyroik@gmail.com>
  */
-interface IStageEventDetermined extends IHasHttpIO
+interface IStageEventDetermined
 {
     public const NAME = 'deflou.event.determined';
 

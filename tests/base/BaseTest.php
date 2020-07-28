@@ -68,7 +68,7 @@ class BaseTest extends TestCase
         $installer->installPackages([
             'deflou/base' => json_decode(file_get_contents(getcwd() . '/extas.json'), true)
         ]);
-        
+
         $this->prepareDefault();
 
         $output = $this->deflou->dispatchEvent(new Input([
