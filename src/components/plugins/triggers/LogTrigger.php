@@ -1,5 +1,5 @@
 <?php
-namespace deflou\components\plugins\events;
+namespace deflou\components\plugins\triggers;
 
 use deflou\components\triggers\actions\THasApplicationAction;
 use deflou\components\triggers\events\THasApplicationEvent;
@@ -19,7 +19,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @method IRepository triggersLogs()
  *
- * @package deflou\components\plugins\events
+ * @package deflou\components\plugins\triggers
  * @author jeyroik <jeyroik@gmail.com>
  */
 class LogTrigger extends Plugin implements IStageAfterActionRun

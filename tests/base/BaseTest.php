@@ -8,12 +8,12 @@ use deflou\components\Input;
 use deflou\components\triggers\actions\ApplicationAction;
 use deflou\components\triggers\events\ApplicationEvent;
 use deflou\components\triggers\Trigger;
+use deflou\components\triggers\TriggerLog;
 use deflou\interfaces\IDeflou;
 use Dotenv\Dotenv;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
 use extas\components\parsers\Parser;
-use extas\components\plugins\Plugin;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepositoryDynamic;
 use extas\components\THasMagicClass;
@@ -50,7 +50,8 @@ class BaseTest extends TestCase
             ['triggers', 'name', Trigger::class],
             ['applicationEvents', 'id', ApplicationEvent::class],
             ['applicationActions', 'id', ApplicationAction::class],
-            ['parsers', 'name', Parser::class]
+            ['parsers', 'name', Parser::class],
+            ['triggersLogs', 'id', TriggerLog::class]
         ]);
     }
 
