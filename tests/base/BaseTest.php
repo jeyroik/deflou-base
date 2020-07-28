@@ -67,7 +67,7 @@ class BaseTest extends TestCase
         $this->registerSnuffRepos([
             'conditionRepository' => ConditionRepository::class
         ]);
-        $this->createSnuffConditions(['equal', 'not_empty']);
+        $this->createSnuffConditions(['equal', 'not_empty', 'not_equal']);
         $this->getMagicClass('parsers')->create(new Parser([
             Parser::FIELD__NAME => 'event',
             Parser::FIELD__SAMPLE_NAME => 'simple_replace',
