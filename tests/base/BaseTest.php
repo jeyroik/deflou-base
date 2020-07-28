@@ -289,7 +289,7 @@ class BaseTest extends TestCase
             Trigger::FIELD__ACTION_NAME => 'test_action',
             Trigger::FIELD__EVENT_PARAMETERS => [
                 'test_unknown' => [
-                    IConditionParameter::FIELD__NAME => 'test',
+                    IConditionParameter::FIELD__NAME => 'test_unknown',
                     IConditionParameter::FIELD__VALUE => 'is ok',
                     IConditionParameter::FIELD__CONDITION => '='
                 ]
