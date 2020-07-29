@@ -10,17 +10,18 @@ use deflou\components\triggers\events\ApplicationEvent;
 use deflou\components\triggers\Trigger;
 use deflou\components\triggers\TriggerLog;
 use deflou\interfaces\IDeflou;
+use deflou\interfaces\stages\IStageEventDetermined;
 use deflou\interfaces\triggers\actions\IApplicationAction;
 use deflou\interfaces\triggers\events\IApplicationEvent;
 use deflou\interfaces\triggers\ITriggerLog;
 use Dotenv\Dotenv;
-use extas\components\conditions\Condition;
 use extas\components\conditions\ConditionRepository;
 use extas\components\conditions\TSnuffConditions;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
 use extas\components\parsers\Parser;
 use extas\components\parsers\ParserSimpleReplace;
+use extas\components\plugins\PluginEmpty;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepository;
 use extas\components\repositories\TSnuffRepositoryDynamic;
@@ -28,7 +29,6 @@ use extas\components\THasMagicClass;
 use extas\interfaces\conditions\IConditionParameter;
 use extas\interfaces\samples\parameters\ISampleParameter;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use tests\base\misc\MiscApplication;
@@ -87,6 +87,7 @@ class BaseTest extends TestCase
     protected function tearDown(): void
     {
         $this->deleteSnuffDynamicRepositories();
+        $this->deleteSnuffPlugins();
     }
 
     public function testMissedAppParam()
@@ -139,6 +140,8 @@ class BaseTest extends TestCase
         $cOutput = $this->getOutput(true);
 
         $this->prepareDefault($cOutput);
+
+        $this->createSnuffPlugin(PluginEmpty::class, [IStageEventDetermined::NAME]);
 
         $output = $this->deflou->dispatchEvent(new Input([
             'app' => 'test',
