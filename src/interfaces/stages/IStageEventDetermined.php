@@ -2,7 +2,6 @@
 namespace deflou\interfaces\stages;
 
 use deflou\interfaces\applications\activities\IActivity;
-use deflou\interfaces\applications\IApplication;
 use deflou\interfaces\servers\requests\IApplicationRequest;
 
 /**
@@ -17,9 +16,8 @@ interface IStageEventDetermined
 
     /**
      * @param IActivity $event
-     * @param IApplication $eventApp
      * @param IApplicationRequest $request
      * @return bool
      */
-    public function __invoke(IActivity $event, IApplication $eventApp, IApplicationRequest &$request): bool;
+    public function __invoke(IActivity $event, IApplicationRequest &$request): bool;
 }

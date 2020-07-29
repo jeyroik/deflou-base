@@ -2,7 +2,6 @@
 namespace deflou\components\plugins\events;
 
 use deflou\interfaces\applications\activities\IActivity;
-use deflou\interfaces\applications\IApplication;
 use deflou\interfaces\servers\requests\IApplicationRequest;
 use deflou\interfaces\stages\IStageEventDetermine;
 use deflou\interfaces\stages\IStageEventDetermined;
@@ -27,16 +26,16 @@ abstract class EventDetermine extends Plugin implements IStageEventDetermine
         }
 
         $event = $this->dispatch($request);
-        $app = $request->getParameterValue($request::PARAM__EVENT_APPLICATION);
 
         if ($event) {
-            $this->runAfter(IStageEventDetermined::NAME, $event, $app, $request);
+            $this->runAfter(IStageEventDetermined::NAME, $event, $request);
 
+            $app = $event->getApplication();
             $stage = 'deflou.application.' . $app->getSampleName() . '.' . $event->getSampleName() . '.determined';
-            $this->runAfter($stage, $event, $app, $request);
+            $this->runAfter($stage, $event, $request);
 
             $stage = 'deflou.application.' . $app->getName() . '.' . $event->getName() . '.determined';
-            $this->runAfter($stage, $event, $app, $request);
+            $this->runAfter($stage, $event, $request);
 
             $request->addParameterByValue($request::PARAM__EVENT, $event);
         }
@@ -47,13 +46,11 @@ abstract class EventDetermine extends Plugin implements IStageEventDetermine
     /**
      * @param string $stage
      * @param IActivity $event
-     * @param IApplication $eventApp
      * @param IApplicationRequest $request
      */
     protected function runAfter(
         string $stage,
         IActivity $event,
-        IApplication $eventApp,
         IApplicationRequest $request
     ): void
     {
@@ -61,7 +58,7 @@ abstract class EventDetermine extends Plugin implements IStageEventDetermine
             /**
              * @var IStageEventDetermined $plugin
              */
-            $plugin($event, $eventApp, $request);
+            $plugin($event, $request);
         }
     }
 
