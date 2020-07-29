@@ -10,6 +10,7 @@ use deflou\components\triggers\events\ApplicationEvent;
 use deflou\components\triggers\Trigger;
 use deflou\components\triggers\TriggerLog;
 use deflou\interfaces\IDeflou;
+use deflou\interfaces\stages\IStageEventDetermined;
 use deflou\interfaces\triggers\actions\IApplicationAction;
 use deflou\interfaces\triggers\events\IApplicationEvent;
 use deflou\interfaces\triggers\ITriggerLog;
@@ -30,6 +31,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use tests\base\misc\MiscApplication;
+use tests\PluginEmpty;
 
 /**
  * Class BaseTest
@@ -85,6 +87,7 @@ class BaseTest extends TestCase
     protected function tearDown(): void
     {
         $this->deleteSnuffDynamicRepositories();
+        $this->deleteSnuffPlugins();
     }
 
     public function testMissedAppParam()
@@ -137,6 +140,8 @@ class BaseTest extends TestCase
         $cOutput = $this->getOutput(true);
 
         $this->prepareDefault($cOutput);
+
+        $this->createSnuffPlugin(PluginEmpty::class, [IStageEventDetermined::NAME]);
 
         $output = $this->deflou->dispatchEvent(new Input([
             'app' => 'test',
