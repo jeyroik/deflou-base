@@ -21,6 +21,7 @@ use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
 use extas\components\parsers\Parser;
 use extas\components\parsers\ParserSimpleReplace;
+use extas\components\plugins\PluginEmpty;
 use extas\components\plugins\TSnuffPlugins;
 use extas\components\repositories\TSnuffRepository;
 use extas\components\repositories\TSnuffRepositoryDynamic;
@@ -31,7 +32,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use tests\base\misc\MiscApplication;
-use tests\PluginEmpty;
 
 /**
  * Class BaseTest
