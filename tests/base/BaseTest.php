@@ -15,7 +15,7 @@ use deflou\interfaces\triggers\actions\IApplicationAction;
 use deflou\interfaces\triggers\events\IApplicationEvent;
 use deflou\interfaces\triggers\ITriggerLog;
 use Dotenv\Dotenv;
-use extas\components\conditions\ConditionRepository;
+use extas\components\conditions\Condition;
 use extas\components\conditions\TSnuffConditions;
 use extas\components\console\TSnuffConsole;
 use extas\components\packages\Installer;
@@ -63,10 +63,8 @@ class BaseTest extends TestCase
             ['applicationEvents', 'id', ApplicationEvent::class],
             ['applicationActions', 'id', ApplicationAction::class],
             ['parsers', 'name', Parser::class],
-            ['triggersLogs', 'id', TriggerLog::class]
-        ]);
-        $this->registerSnuffRepos([
-            'conditionRepository' => ConditionRepository::class
+            ['triggersLogs', 'id', TriggerLog::class],
+            ['conditions', 'name', Condition::class]
         ]);
         $this->createSnuffConditions(['equal', 'not_empty', 'not_equal']);
         $this->getMagicClass('parsers')->create(new Parser([
