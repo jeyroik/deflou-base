@@ -2,7 +2,7 @@
   "name": "jeyroik/deflou-base",
   "description": "Base DeFlou behaviour package",
   "require": {
-    "jeyroik/deflou-foundation": "0.*",
+    "jeyroik/deflou-foundation": "1.*",
     "jeyroik/extas-parsers": "0.*"
   },
   "require-dev": {
